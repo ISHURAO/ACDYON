@@ -553,17 +553,38 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 1.25rem;
+  padding: 0.5rem 1.25rem;
   background-color: rgba(0, 0, 0, 0.15);
   border-bottom: 1px solid var(--border-color);
 }
 
+.console-tabs {
+  display: flex;
+  gap: 1rem;
+}
+
 .console-tab {
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-secondary);
+  background: none;
+  border: none;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: var(--transition-fast);
+}
+
+.console-tab:hover {
+  color: var(--text-primary);
+}
+
+.console-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
 .live-dot-indicator {

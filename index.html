@@ -184,11 +184,17 @@ console.<span class="function">log</span>(<span class="string">`Extracted ${data
           <!-- Console Event Stream Card -->
           <div class="dashboard-card console-card">
             <div class="card-header">
-              <span class="console-tab active">Live Extraction Logs</span>
+              <div class="console-tabs">
+                <button class="console-tab active" id="tab-logs">Live Logs</button>
+                <button class="console-tab" id="tab-fingerprint">Stealth Fingerprint</button>
+              </div>
               <span class="live-dot-indicator"></span>
             </div>
             <div class="console-body" id="console-logs">
               <!-- Logs will be inserted via JS -->
+            </div>
+            <div class="console-body" id="console-fingerprint" style="display: none; font-family: var(--font-mono); color: #00f2fe; overflow-y: auto;">
+              <!-- Fingerprint data will be inserted via JS -->
             </div>
           </div>
         </div>

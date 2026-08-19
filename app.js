@@ -30,9 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================
-  // 2. LIVE DASHBOARD STREAM SIMULATION
+  // 2. LIVE DASHBOARD STREAM SIMULATION & STEALTH FINGERPRINTING
   // ==========================================
   const consoleLogs = document.getElementById('console-logs');
+  const consoleFingerprint = document.getElementById('console-fingerprint');
+  const tabLogs = document.getElementById('tab-logs');
+  const tabFingerprint = document.getElementById('tab-fingerprint');
   const statIps = document.getElementById('stat-ips');
   const statHeals = document.getElementById('stat-heals');
 
@@ -51,6 +54,68 @@ document.addEventListener('DOMContentLoaded', () => {
   let logIndex = 0;
   let simulatedIpsCount = 24912;
   let simulatedHealsCount = 1402;
+  let activeIp = '104.244.73.18';
+
+  // Dynamic Browser Fingerprint Mock Data Generator
+  const userAgents = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15',
+    'Mozilla/5.0 (X11; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0'
+  ];
+  const webglRenderers = [
+    'ANGLE (NVIDIA GeForce RTX 4070 Laptop GPU Direct3D11)',
+    'ANGLE (Intel, Intel(R) Iris(R) Xe Graphics Direct3D11)',
+    'Apple GPU (Apple M3 Core Audio/Canvas Context)'
+  ];
+
+  function updateFingerprintDisplay() {
+    if (!consoleFingerprint) return;
+    
+    // Choose profile index based on logIndex
+    const profileIdx = logIndex % 3;
+    const canvasHash = Math.abs(1849102941 - (logIndex * 243912)).toString(16);
+    
+    const fingerprintProfile = {
+      session: {
+        active_ip: activeIp,
+        subnet_mask: "255.255.255.0",
+        proxy_provider: "Residential-IPPool-AS92",
+        reputation_score: "0.985"
+      },
+      browser_fingerprint: {
+        user_agent: userAgents[profileIdx],
+        canvas_hash: "0x" + canvasHash,
+        webgl_renderer: webglRenderers[profileIdx],
+        timezone: "America/New_York",
+        languages: ["en-US", "en", "es"],
+        do_not_track: "1"
+      },
+      network_handshake: {
+        ja3_tls_signature: "771,4865-4866-4867,43-51-45-47,10-11,0",
+        http2_settings: "SETTINGS_MAX_CONCURRENT_STREAMS: 100",
+        tcp_window_size: "65535"
+      }
+    };
+    
+    consoleFingerprint.textContent = JSON.stringify(fingerprintProfile, null, 2);
+  }
+
+  // Console Card Tab switching
+  if (tabLogs && tabFingerprint && consoleLogs && consoleFingerprint) {
+    tabLogs.addEventListener('click', () => {
+      tabLogs.classList.add('active');
+      tabFingerprint.classList.remove('active');
+      consoleLogs.style.display = 'flex';
+      consoleFingerprint.style.display = 'none';
+    });
+
+    tabFingerprint.addEventListener('click', () => {
+      tabFingerprint.classList.add('active');
+      tabLogs.classList.remove('active');
+      consoleLogs.style.display = 'none';
+      consoleFingerprint.style.display = 'block';
+    });
+  }
 
   function addLogLine() {
     if (!consoleLogs) return;
@@ -78,6 +143,16 @@ document.addEventListener('DOMContentLoaded', () => {
     logRow.innerHTML = `<span class="console-timestamp">${timestamp}</span><span class="${levelClass}">${levelText}</span> <span class="console-text">${log.text}</span>`;
     consoleLogs.appendChild(logRow);
     consoleLogs.scrollTop = consoleLogs.scrollHeight;
+
+    // Allocate random IP in log and update fingerprint
+    if (log.text.includes('Allocated residential node IP')) {
+      const octet3 = Math.floor(Math.random() * 254) + 1;
+      const octet4 = Math.floor(Math.random() * 254) + 1;
+      activeIp = `184.23.${octet3}.${octet4}`;
+      log.text = `Allocated residential node IP: ${activeIp}`;
+    }
+
+    updateFingerprintDisplay();
 
     // Advance index
     logIndex = (logIndex + 1) % logTemplates.length;
