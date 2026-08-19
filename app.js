@@ -145,51 +145,57 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   if (sandboxRunBtn) {
-    sandboxRunBtn.addEventListener('click', () => {
-      // Prevent multiple parallel runs
-      if (sandboxRunBtn.disabled) return;
+      sandboxRunBtn.addEventListener('click', () => {
+        // Prevent multiple parallel runs
+        if (sandboxRunBtn.disabled) return;
 
-      const targetUrl = sandboxUrlInput.value.trim() || 'https://linkedin.com/jobs';
-      sandboxRunBtn.disabled = true;
-      sandboxRunBtn.textContent = 'Ingesting...';
-      
-      // Clear previous outputs
-      sandboxTrace.innerHTML = '';
-      sandboxJsonOutput.textContent = '{\n  "status": "processing"\n}';
-      jsonStatus.textContent = 'Running';
-      jsonStatus.className = 'status-indicator-badge running';
+        const targetUrl = sandboxUrlInput.value.trim() || 'https://linkedin.com/jobs';
+        sandboxRunBtn.disabled = true;
+        sandboxRunBtn.textContent = 'Ingesting...';
+        
+        // Hide download button during execution
+        if (downloadBtn) downloadBtn.style.display = 'none';
 
-      let step = 0;
-      function runNextStep() {
-        if (step < traceSteps.length) {
-          const currentStep = traceSteps[step];
-          const traceItem = document.createElement('li');
-          traceItem.className = 'trace-item';
-          
-          let icon = '⚡';
-          if (currentStep.type === 'success') icon = '✓';
-          if (currentStep.type === 'pending') icon = '⚙';
+        // Clear previous outputs
+        sandboxTrace.innerHTML = '';
+        sandboxJsonOutput.textContent = '{\n  "status": "processing"\n}';
+        jsonStatus.textContent = 'Running';
+        jsonStatus.className = 'status-indicator-badge running';
 
-          traceItem.innerHTML = `<span class="trace-icon ${currentStep.type}">${icon}</span><span class="trace-text">${currentStep.text}</span>`;
-          sandboxTrace.appendChild(traceItem);
-          sandboxTrace.scrollTop = sandboxTrace.scrollHeight;
-          
-          step++;
-          setTimeout(runNextStep, 900);
-        } else {
-          // Finished successfully
-          sandboxRunBtn.disabled = false;
-          sandboxRunBtn.textContent = 'Ingest Page';
-          jsonStatus.textContent = 'Completed';
-          jsonStatus.className = 'status-indicator-badge completed';
-          
-          // Print formatted JSON
-          sandboxJsonOutput.textContent = JSON.stringify(mockJobsJson, null, 2);
+        let step = 0;
+        function runNextStep() {
+          if (step < traceSteps.length) {
+            const currentStep = traceSteps[step];
+            const traceItem = document.createElement('li');
+            traceItem.className = 'trace-item';
+            
+            let icon = '⚡';
+            if (currentStep.type === 'success') icon = '✓';
+            if (currentStep.type === 'pending') icon = '⚙';
+
+            traceItem.innerHTML = `<span class="trace-icon ${currentStep.type}">${icon}</span><span class="trace-text">${currentStep.text}</span>`;
+            sandboxTrace.appendChild(traceItem);
+            sandboxTrace.scrollTop = sandboxTrace.scrollHeight;
+            
+            step++;
+            setTimeout(runNextStep, 900);
+          } else {
+            // Finished successfully
+            sandboxRunBtn.disabled = false;
+            sandboxRunBtn.textContent = 'Ingest Page';
+            jsonStatus.textContent = 'Completed';
+            jsonStatus.className = 'status-indicator-badge completed';
+            
+            // Show download button
+            if (downloadBtn) downloadBtn.style.display = 'inline-block';
+
+            // Print formatted JSON
+            sandboxJsonOutput.textContent = JSON.stringify(mockJobsJson, null, 2);
+          }
         }
-      }
 
-      runNextStep();
-    });
+        runNextStep();
+      });
   }
 
 
@@ -227,17 +233,28 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
   let konamiIndex = 0;
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === konamiCode[konamiIndex]) {
-      konamiIndex++;
-      if (konamiIndex === konamiCode.length) {
-        openRetroTerminal();
-        konamiIndex = 0;
-      }
-    } else {
-      konamiIndex = 0;
-    }
-  });
+   document.addEventListener('keydown', (e) => {
+     // Toggle terminal with backtick/tilde (`) key
+     if (e.key === '`') {
+       e.preventDefault();
+       if (retroTerminal.classList.contains('hidden')) {
+         openRetroTerminal();
+       } else {
+         closeRetroTerminal();
+       }
+       return;
+     }
+
+     if (e.key === konamiCode[konamiIndex]) {
+       konamiIndex++;
+       if (konamiIndex === konamiCode.length) {
+         openRetroTerminal();
+         konamiIndex = 0;
+       }
+     } else {
+       konamiIndex = 0;
+     }
+   });
 
   function openRetroTerminal() {
     if (retroTerminal) {
@@ -331,4 +348,72 @@ document.addEventListener('DOMContentLoaded', () => {
         break;
     }
   }
+
+  // ==========================================
+  // 5. ADDITIONAL PREMIUM INTERACTIONS
+  // ==========================================
+
+  // A. Vercel-style Spotlight Hover Effect on cards
+  const spotlightCards = document.querySelectorAll('.dashboard-card, .feature-card');
+  spotlightCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+  });
+
+  // B. Copy Code Button
+  const copyBtn = document.getElementById('hero-copy-btn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      const codeText = `import { AcdyonIngest } from '@acdyon/ingest';
+const client = new AcdyonIngest({
+  apiKey: process.env.ACDYON_KEY,
+  behavior: 'stealth-dynamic'
 });
+const data = await client.extract({
+  url: 'https://linkedin.com/jobs/search',
+  schema: {
+    title: '.job-card-title',
+    company: '.company-name',
+    salary: '.salary-range'
+  },
+  options: {
+    rotateFingerprint: true,
+    solveCaptchas: true,
+    autoHealSelectors: true
+  }
+});`;
+      navigator.clipboard.writeText(codeText).then(() => {
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyBtn.textContent = 'Copy';
+        }, 2000);
+      });
+    });
+  }
+
+  // C. Download Schema Action (Sandbox)
+  const downloadBtn = document.getElementById('sandbox-download-btn');
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', () => {
+      const jsonContent = JSON.stringify(mockJobsJson, null, 2);
+      const blob = new Blob([jsonContent], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'acdyon-ingest-schema.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  // Hook button reveal into trace loading state
+  const originalRunBtnHandler = sandboxRunBtn.onclick; // wait, sandboxRunBtn is handled via eventListener, let's update it in app.js
+});
+

@@ -114,6 +114,7 @@
                 <span class="editor-dot green"></span>
               </div>
               <div class="editor-filename">client.js</div>
+              <button id="hero-copy-btn" class="editor-copy-btn" aria-label="Copy code">Copy</button>
             </div>
             <pre class="editor-body"><code><span class="keyword">import</span> { <span class="class-name">AcdyonIngest</span> } <span class="keyword">from</span> <span class="string">'@acdyon/ingest'</span>;
 
@@ -268,7 +269,10 @@ console.<span class="function">log</span>(<span class="string">`Extracted ${data
             <div class="sandbox-panel json-panel">
               <div class="panel-header">
                 <h4 class="panel-title">Extracted Output (JSON)</h4>
-                <span class="status-indicator-badge idle" id="json-status">Idle</span>
+                <div class="panel-header-actions">
+                  <button id="sandbox-download-btn" class="panel-action-btn" style="display: none;">Download Schema</button>
+                  <span class="status-indicator-badge idle" id="json-status">Idle</span>
+                </div>
               </div>
               <pre class="json-code"><code id="sandbox-json-output">{
   "status": "waiting_input"
