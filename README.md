@@ -4,6 +4,8 @@ A premium, developer-first landing page designed for **Acdyon Ingest**: a self-h
 
 Built as part of the **Acdyon Technologies Frontend Challenge: "Build It Like You Mean It"** (Part 2 — The Premium Home Page).
 
+![Acdyon Ingest Landing Page](./screenshot.png)
+
 ---
 
 ## 🚀 Live Links
