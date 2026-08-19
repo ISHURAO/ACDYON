@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acdyon Ingest — Resilient Web Ingestion for Engineers</title>
+  <meta name="description" content="Acdyon Ingest is a self-healing, premium data extraction platform built to bypass advanced anti-bot fingerprinting, rate-limiting, and structural DOM changes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-theme">
+  <!-- Retro Terminal Easter Egg Overlay -->
+  <div id="retro-terminal" class="terminal-overlay hidden">
+    <div class="terminal-container">
+      <div class="terminal-header">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+        <span class="terminal-title">acdyon-terminal://guest@acdyon</span>
+        <button id="close-terminal" class="terminal-close">&times;</button>
+      </div>
+      <div class="terminal-body" id="terminal-body">
+        <div class="terminal-output">
+          <p class="neon-text-green">=== ACDYON TECHNOLOGIES SECURE TERMINAL v1.0.4 ===</p>
+          <p>Type <span class="highlight-text">help</span> to view available commands, or <span class="highlight-text">exit</span> to return to the landing page.</p>
+          <p>Tip: Try typing <span class="highlight-text">decisions</span> or <span class="highlight-text">system-diagnose</span>.</p>
+        </div>
+        <div class="terminal-input-line">
+          <span class="terminal-prompt">acdyon$</span>
+          <input type="text" id="terminal-input" autofocus autocomplete="off" spellcheck="false">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="#" class="logo-link" id="navbar-logo">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 22H22L12 2Z" stroke="url(#logo-grad)" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M12 8L6 20H18L12 8Z" fill="url(#logo-grad)" fill-opacity="0.2" stroke="url(#logo-grad)" stroke-width="1.5" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="logo-grad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#00f2fe"/>
+                <stop offset="1" stop-color="#4facfe"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="logo-text">acdyon <span class="logo-subtext">ingest</span></span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#dashboard-demo" class="nav-link">Live Console</a>
+        <a href="#sandbox" class="nav-link">Sandbox</a>
+        <a href="#philosophy" class="nav-link">Philosophy</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark/light theme">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <a href="#sandbox" class="btn btn-primary btn-sm">Try Free Sandbox</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="glow-container">
+        <div class="glow-orb orb-primary"></div>
+        <div class="glow-orb orb-secondary"></div>
+      </div>
+      <div class="container hero-inner">
+        <div class="hero-content">
+          <div class="badge">
+            <span class="badge-dot"></span>
+            <span>Resilient Ingestion Engine v2.4</span>
+          </div>
+          <h1 class="hero-title">
+            Get data out of platforms that <span class="gradient-text">actively resist it.</span>
+          </h1>
+          <p class="hero-lead">
+            Acdyon Ingest bypasses Cloudflare, fingerprinted headless browsers, and rate-limiting. Built with self-healing DOM selectors to keep your pipelines running when markup changes.
+          </p>
+          <div class="hero-cta-group">
+            <a href="#sandbox" class="btn btn-primary btn-lg">Run a Request Free</a>
+            <a href="#dashboard-demo" class="btn btn-secondary btn-lg">Watch Self-Healing Live</a>
+          </div>
+          <div class="hero-notes">
+            <span class="notes-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17L4 12"/></svg>
+              No credit card required
+            </span>
+            <span class="notes-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17L4 12"/></svg>
+              100 requests free/month
+            </span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="code-editor-mock">
+            <div class="editor-header">
+              <div class="editor-dots">
+                <span class="editor-dot red"></span>
+                <span class="editor-dot yellow"></span>
+                <span class="editor-dot green"></span>
+              </div>
+              <div class="editor-filename">client.js</div>
+            </div>
+            <pre class="editor-body"><code><span class="keyword">import</span> { <span class="class-name">AcdyonIngest</span> } <span class="keyword">from</span> <span class="string">'@acdyon/ingest'</span>;
+
+<span class="keyword">const</span> client = <span class="keyword">new</span> <span class="class-name">AcdyonIngest</span>({
+  apiKey: process.env.<span class="property">ACDYON_KEY</span>,
+  behavior: <span class="string">'stealth-dynamic'</span>
+});
+
+<span class="keyword">const</span> data = <span class="keyword">await</span> client.<span class="function">extract</span>({
+  url: <span class="string">'https://linkedin.com/jobs/search'</span>,
+  schema: {
+    title: <span class="string">'.job-card-title'</span>,
+    company: <span class="string">'.company-name'</span>,
+    salary: <span class="string">'.salary-range'</span>
+  },
+  options: {
+    rotateFingerprint: <span class="keyword">true</span>,
+    solveCaptchas: <span class="keyword">true</span>,
+    autoHealSelectors: <span class="keyword">true</span>
+  }
+});
+
+console.<span class="function">log</span>(<span class="string">`Extracted ${data.length} jobs successfully!`</span>);</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE DEMO SECTION -->
+    <section id="dashboard-demo" class="dashboard-section section-padding">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 class="section-title">The Self-Healing Pipeline in Action</h2>
+          <p class="section-subtitle">
+            Most scrapers break silently when target websites update their class names. Acdyon Ingest maps the structural relationship of the DOM and automatically corrects selector paths in real time.
+          </p>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Statistics Card -->
+          <div class="dashboard-card stat-card">
+            <h3 class="card-title">Live Engine Status</h3>
+            <div class="stat-grid">
+              <div class="stat-item">
+                <span class="stat-label">System Health</span>
+                <span class="stat-value text-success">99.98%</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Active Residential IPs</span>
+                <span class="stat-value" id="stat-ips">24,912</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">TLS Fingerprints</span>
+                <span class="stat-value">184 Types</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Auto-Healed DOMs</span>
+                <span class="stat-value text-accent" id="stat-heals">1,402</span>
+              </div>
+            </div>
+            <div class="pulse-indicator-group">
+              <div class="pulse-circle"></div>
+              <span class="pulse-label">Pacing: 25 req/sec (Safe Buffer Mode)</span>
+            </div>
+          </div>
+
+          <!-- Console Event Stream Card -->
+          <div class="dashboard-card console-card">
+            <div class="card-header">
+              <span class="console-tab active">Live Extraction Logs</span>
+              <span class="live-dot-indicator"></span>
+            </div>
+            <div class="console-body" id="console-logs">
+              <!-- Logs will be inserted via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section id="features" class="features-section section-padding">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 class="section-title">Engineered to bypass detection, not just scrape.</h2>
+          <p class="section-subtitle">
+            Modern anti-bot tools monitor everything from WebGL parameters to your TCP/IP window size. Here is how we ensure data delivery.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3 class="feature-title">TLS & Headless Spoofing</h3>
+            <p class="feature-desc">
+              We mimic real browser network stacks including HTTP/2 settings, TLS Client Hello fingerprints, Canvas noise, and navigator parameters.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <h3 class="feature-title">Adaptive Request Pacing</h3>
+            <p class="feature-desc">
+              We schedule requests using poisson-distribution delay models to mimic human scrolling and navigation, throwing off behavioral detectors.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 14.66V17c0 .55-.45 1-1 1h-2.34l-2.77 2.77c-.2.2-.51.2-.71 0L10.34 18H8c-.55 0-1-.45-1-1v-2.34L4.23 11.9c-.2-.2-.2-.51 0-.71L7 8.34V6c0-.55.45-1 1-1h2.34l2.77-2.77c.2-.2.51-.2.71 0L16.66 5H19c5.52 0 10 4.48 10 10 0 .55-.45 1-1 1h-2.34"/></svg>
+            </div>
+            <h3 class="feature-title">Automatic DOM Healing</h3>
+            <p class="feature-desc">
+              When class names change from <code>.job-title</code> to <code>.ab-x98s</code>, our engine maps structural paths and text content matching rules to auto-correct queries.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE SANDBOX SECTION -->
+    <section id="sandbox" class="sandbox-section section-padding">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 class="section-title">Try it Yourself</h2>
+          <p class="section-subtitle">
+            Enter a simulated target URL to run through the extraction pipeline. Observe how the engine selects proxy nodes, resolves challenges, and extracts content.
+          </p>
+        </div>
+
+        <div class="sandbox-container">
+          <div class="sandbox-input-bar">
+            <span class="sandbox-method">GET</span>
+            <input type="text" id="sandbox-url" value="https://linkedin.com/jobs/search?q=engineer" placeholder="Enter target URL...">
+            <button id="sandbox-run-btn" class="btn btn-primary">Ingest Page</button>
+          </div>
+
+          <div class="sandbox-results-grid">
+            <!-- Steps Trace Visualizer -->
+            <div class="sandbox-panel trace-panel">
+              <h4 class="panel-title">Execution Steps Trace</h4>
+              <ul class="trace-list" id="sandbox-trace">
+                <li class="trace-placeholder">Click "Ingest Page" to initiate the request simulation.</li>
+              </ul>
+            </div>
+
+            <!-- JSON Output Panel -->
+            <div class="sandbox-panel json-panel">
+              <div class="panel-header">
+                <h4 class="panel-title">Extracted Output (JSON)</h4>
+                <span class="status-indicator-badge idle" id="json-status">Idle</span>
+              </div>
+              <pre class="json-code"><code id="sandbox-json-output">{
+  "status": "waiting_input"
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HONEST PHILOSOPHY SECTION -->
+    <section id="philosophy" class="philosophy-section section-padding">
+      <div class="container">
+        <div class="philosophy-card">
+          <div class="philosophy-content">
+            <h2 class="section-title">An Honest Approach to Ingestion</h2>
+            <p class="philosophy-text">
+              We do not fabricate testimonials from "Fortune 500 VPs" or list fake logos of clients we don't have. We sell robust infrastructure directly to developers who know the difficulty of reliable data collection.
+            </p>
+            <p class="philosophy-text">
+              <strong>Our Stance on Scraping Compliance:</strong> We build in respect for <code>robots.txt</code> and rate-limits unless instructed otherwise by explicit header overrides. We believe in getting public web data responsibly, without burdening host server capacities.
+            </p>
+            <div class="philosophy-features">
+              <div class="philo-feat">
+                <span class="philo-icon">✓</span>
+                <div>
+                  <strong>No Inventory Padding:</strong> We scale proxies on demand. Our advertised capacity reflects actual real-time node availability.
+                </div>
+              </div>
+              <div class="philo-feat">
+                <span class="philo-icon">✓</span>
+                <div>
+                  <strong>Direct Engineering Support:</strong> Support tickets are routed straight to the team writing the core engine.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-info">
+        <span class="footer-logo">acdyon <span class="logo-subtext">ingest</span></span>
+        <p class="footer-desc">Premium data extraction tooling that engineers trust.</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Acdyon Technologies. All rights reserved.</p>
+        <p class="easter-egg-hint">Hint: The engine responds to the developer Konami Code, or typing 'help' in the secret console activated by clicking the logo 5 times.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
